@@ -1,3 +1,57 @@
-#root {
-  color: red;
+body {
+  background-color: #999;
+}
+main {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  background-color: #999;
+  max-width: 80vw;
+  margin: 0 auto;
+}
+.episode {
+  background-color: #fff;
+  width: calc(33.33% - 10px);
+  border-radius: 5px;
+  align-items: center;
+}
+.episode h2 {
+  padding: 20px;
+  border: 2px solid #111;
+  border-radius: 5px;
+  font-size: 1rem;
+  text-align: center;
+  display: block;
+  margin: 0 auto;
+  width: calc(100%-20px);
+}
+.episode img {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
+  padding: 20px;
+}
+.episode p {
+  padding: 0 10px;
+}
+.episode button {
+  display: block;
+  padding: 10px;
+  cursor: pointer;
+  margin: 0 auto;
+}
+.episode button:hover {
+  background-color: #111;
+  color: #fff;
+}
+
+@media (max-width: 768px) {
+  main {
+    display: flex;
+    flex-direction: column;
+  }
+  .episode {
+    width: 100%;
+  }
 }

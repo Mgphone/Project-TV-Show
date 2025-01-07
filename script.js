@@ -41,7 +41,7 @@ function makePageForEpisodes(episodeList) {
 
 function initializeSearchAndDropdown(allEpisodes) {
   const rootElem = document.getElementById("root");
-  
+
   // Create search bar
   const searchInput = document.createElement("input");
   searchInput.type = "text";
@@ -81,9 +81,13 @@ function initializeSearchAndDropdown(allEpisodes) {
     const selectedValue = episodeSelect.value;
     if (selectedValue === "") {
       makePageForEpisodes(allEpisodes);
+      updateEpisodeCount(allEpisodes.length, allEpisodes.length);
     } else {
-      const selectedEpisode = allEpisodes.filter((episode) => episode.name === selectedValue);
+      const selectedEpisode = allEpisodes.filter(
+        (episode) => episode.name === selectedValue
+      );
       makePageForEpisodes(selectedEpisode);
+      updateEpisodeCount(selectedEpisode.length, allEpisodes.length);
     }
   });
 

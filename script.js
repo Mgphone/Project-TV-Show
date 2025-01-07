@@ -48,6 +48,10 @@ function initializeSearchAndDropdown(allEpisodes) {
   searchInput.placeholder = "Search episodes...";
   searchInput.id = "search-bar";
 
+  //make it episode label
+  const selectLabel = document.createElement("label");
+  selectLabel.setAttribute("for", "episode-label");
+
   // Create dropdown
   const episodeSelect = document.createElement("select");
   episodeSelect.id = "episode-selector";
@@ -94,7 +98,8 @@ function initializeSearchAndDropdown(allEpisodes) {
   // Add elements to DOM
   const controlsDiv = document.createElement("div");
   controlsDiv.id = "controls";
-  controlsDiv.append(searchInput, episodeSelect);
+  // controlsDiv.appendChild(selectLabel);
+  controlsDiv.append(searchInput, selectLabel, episodeSelect);
   rootElem.prepend(controlsDiv);
 
   // Episode count display

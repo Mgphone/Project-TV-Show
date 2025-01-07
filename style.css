@@ -1,20 +1,46 @@
 body {
   background-color: #999;
 }
-main {
+#root {
+  padding-top: 5vw;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100vw;
+  height: 100%;
+}
+main,
+#controls {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  /* justify-content: space-between; */
-  background-color: #999;
+
   max-width: 80vw;
   margin: 0 auto;
+}
+#controls {
+  /* background-color: red; */
+  width: 100%;
+}
+#controls p {
+  background-color: #fff;
+  color: #111;
+  padding: 10px;
+  border-radius: 5px;
+}
+#controls p:hover {
+  background-color: #111;
+  color: #fff;
+  transform: scale(1.1);
 }
 .episode {
   background-color: #fff;
   width: calc(33.33% - 10px);
   border-radius: 5px;
   align-items: center;
+}
+.episode:hover {
+  transform: scale(1.5);
 }
 .episode h2 {
   padding: 20px;
@@ -53,5 +79,6 @@ main {
   }
   .episode {
     width: 100%;
+    transform: scale(1);
   }
 }

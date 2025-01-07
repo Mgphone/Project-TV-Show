@@ -100,7 +100,7 @@ function initializeSearchAndDropdown(allEpisodes) {
   // Episode count display
   const episodeCount = document.createElement("p");
   episodeCount.id = "episode-count";
-  rootElem.append(episodeCount);
+  controlsDiv.append(episodeCount);
   updateEpisodeCount(allEpisodes.length, allEpisodes.length);
 }
 

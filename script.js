@@ -1,21 +1,17 @@
 // JavaScript code for Level 200 implementation
 
 function setup() {
-  // const allEpisodes = getAllEpisodes();
-  // initializeSearchAndDropdown(allEpisodes);
-  // makePageForEpisodes(allEpisodes);
-  fetchEpisodes()
+  fetchEpisodes("https://api.tvmaze.com/shows/2/episodes")
     .then((allEpisodes) => {
       if (allEpisodes) {
         // console.log(allEpisodes);
         initializeSearchAndDropdown(allEpisodes);
-        makePageForEpisodes(allEpisodes);
+        // makePageForEpisodes(allEpisodes);
       }
     })
     .catch((error) => console.error(error));
 }
-function fetchEpisodes() {
-  const url = "https://api.tvmaze.com/shows/82/episodes";
+function fetchEpisodes(url) {
   return fetch(url)
     .then((response) => {
       if (response.ok) {
@@ -62,6 +58,9 @@ function makePageForEpisodes(episodeList) {
 
 function initializeSearchAndDropdown(allEpisodes) {
   const rootElem = document.getElementById("root");
+  //default show all
+
+  makePageForEpisodes(allEpisodes);
 
   // Create search bar
   const searchInput = document.createElement("input");

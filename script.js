@@ -32,7 +32,7 @@ function selectShows(allShows) {
   //first display the episodes
   fetchEpisodes(episodePath)
     .then((allEpisodes) => {
-      console.log("Default episodes:", allEpisodes);
+      // console.log("Default episodes:", allEpisodes);
       initializeSearchAndDropdown(allEpisodes);
     })
     .catch((error) => {
@@ -52,12 +52,10 @@ function selectShows(allShows) {
     const showName = selectedOption.textContent;
 
     episodePath = `https://api.tvmaze.com/shows/${showId}/episodes`;
-    console.log("Selected show: " + showName);
-    console.log("Episode path: " + episodePath);
 
     fetchEpisodes(episodePath)
       .then((allEpisodes) => {
-        console.log("Selected episodes:", allEpisodes);
+        // console.log("Selected episodes:", allEpisodes);
         initializeSearchAndDropdown(allEpisodes);
       })
       .catch((error) => {

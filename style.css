@@ -2,15 +2,16 @@ body {
   background-color: #999;
 }
 #root {
-  padding-top: 5vw;
+  background-color: red;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  width: 100vw;
-  height: 100%;
+  flex-direction: row;
+  /* justify-content: space-around; */
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
 }
-main,
-#controls {
+main {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -19,7 +20,15 @@ main,
   margin: 0 auto;
 }
 #controls {
-  /* background-color: red; */
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+#showList-selector {
+  padding: 20px;
+}
+/* #controls {
+  background-color: red;
   width: 100%;
 }
 #controls p {
@@ -32,7 +41,7 @@ main,
   background-color: #111;
   color: #fff;
   transform: scale(1.1);
-}
+} */
 .episode {
   background-color: #fff;
   width: calc(33.33% - 10px);

@@ -28,7 +28,7 @@ function selectShows(allShows) {
   showSelect.id = "showList-selector";
 
   // Default episode path (if no show is selected)
-  let episodePath = "https://api.tvmaze.com/shows/1/episodes";
+  let episodePath = "https://api.tvmaze.com/shows/169/episodes";
   //first display the episodes
   fetchEpisodes(episodePath)
     .then((allEpisodes) => {
@@ -38,18 +38,23 @@ function selectShows(allShows) {
     .catch((error) => {
       console.error("Error fetching default episodes:", error);
     });
-
-  allShows.map((allShow) => {
+  const selectedShows = allShows.sort((a, b) => a.name.localeCompare(b.name));
+  selectedShows.map((allShow) => {
+    // console.log(allShow);
     const option = document.createElement("option");
     option.value = allShow.id;
     option.textContent = allShow.name;
+    if (allShow.id === 169) {
+      option.selected = true;
+    }
     showSelect.appendChild(option);
   });
 
   showSelect.addEventListener("change", () => {
     const selectedOption = showSelect.options[showSelect.selectedIndex];
+    // console.log(selectedOption);
     const showId = selectedOption.value;
-    const showName = selectedOption.textContent;
+    // const showName = selectedOption.textContent;
 
     episodePath = `https://api.tvmaze.com/shows/${showId}/episodes`;
 
@@ -105,7 +110,7 @@ function initializeSearchAndDropdown(allEpisodes) {
   makePageForEpisodes(allEpisodes);
   const existingControls = document.getElementById("controls");
   if (existingControls) {
-    existingControls.innerHTML = "";
+    existingControls.remove();
   }
   // Create search bar
   const searchInput = document.createElement("input");

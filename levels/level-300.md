@@ -5,10 +5,14 @@ For level 300, you should switch back to your original codebase.
 You should have merged someone else's level 200 implementation.
 
 Once again, compare their implementation to yours. Think:
+
 1. How is it different?
 2. What do you prefer about your implementation?
 3. What do you prefer about their implementation?
 4. What did you learn that you didn't know before?
+   1.his code is shorter and my code have got so many functions
+   My code will be better for big project, when his code is good for small project
+   2.that depends on the project need
 
 Have a discussion about your answers to these questions. In class, together, give a 3 minute talk about your conclusions.
 
@@ -29,8 +33,8 @@ Level 300 is about getting rid of our static data from `episodes.js`, and instea
 3. You must fetch this URL only _once_ per visit to your website. You should not re-fetch when someone searches, scrolls, or selects an episode from the drop-down.
 4. If you don't have data yet, you should show something to tell the user to wait for the data.
 5. If an error occurred loading the data, notify the user.
-  1. Note: real users don't look in the console - `console.log` or `console.error` are not sufficient for this requirement.
-  2. You will need to simulate an error to test this out yourself.
+6. Note: real users don't look in the console - `console.log` or `console.error` are not sufficient for this requirement.
+7. You will need to simulate an error to test this out yourself.
 
 ### Documentation
 

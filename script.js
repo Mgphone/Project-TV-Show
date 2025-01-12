@@ -12,6 +12,7 @@ function setup() {
     .catch((error) => console.error(error));
 }
 function fetchEpisodes(url) {
+
   return fetch(url)
     .then((response) => {
       if (response.ok) {
@@ -64,6 +65,7 @@ function selectShows(allShows) {
   });
 
   selectedShow.append(showSelect);
+
 }
 
 function makePageForEpisodes(episodeList) {
@@ -107,6 +109,7 @@ function initializeSearchAndDropdown(allEpisodes) {
   if (existingControls) {
     existingControls.innerHTML = "";
   }
+
   // Create search bar
   const searchInput = document.createElement("input");
   searchInput.type = "text";

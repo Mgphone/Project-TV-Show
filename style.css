@@ -12,6 +12,7 @@ body {
   gap: 20px;
 }
 main {
+
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -29,6 +30,7 @@ main {
 }
 /* #controls {
   background-color: red;
+
   width: 100%;
 }
 #controls p {
@@ -42,6 +44,7 @@ main {
   color: #fff;
   transform: scale(1.1);
 } */
+
 .episode {
   background-color: #fff;
   width: calc(33.33% - 10px);
@@ -50,6 +53,7 @@ main {
 }
 .episode:hover {
   transform: scale(0.8);
+
 }
 .episode h2 {
   padding: 20px;

@@ -12,7 +12,6 @@ function setup() {
     .catch((error) => console.error(error));
 }
 function fetchEpisodes(url) {
-
   return fetch(url)
     .then((response) => {
       if (response.ok) {
@@ -29,7 +28,7 @@ function selectShows(allShows) {
   showSelect.id = "showList-selector";
 
   // Default episode path (if no show is selected)
-  let episodePath = "https://api.tvmaze.com/shows/1/episodes";
+  let episodePath = "https://api.tvmaze.com/shows/169/episodes";
   //first display the episodes
   fetchEpisodes(episodePath)
     .then((allEpisodes) => {
@@ -44,13 +43,17 @@ function selectShows(allShows) {
     const option = document.createElement("option");
     option.value = allShow.id;
     option.textContent = allShow.name;
+    if (allShow.id == "169") {
+      option.selected = true;
+    }
+
     showSelect.appendChild(option);
   });
 
   showSelect.addEventListener("change", () => {
     const selectedOption = showSelect.options[showSelect.selectedIndex];
     const showId = selectedOption.value;
-    const showName = selectedOption.textContent;
+    // const showName = selectedOption.textContent;
 
     episodePath = `https://api.tvmaze.com/shows/${showId}/episodes`;
 
@@ -65,7 +68,6 @@ function selectShows(allShows) {
   });
 
   selectedShow.append(showSelect);
-
 }
 
 function makePageForEpisodes(episodeList) {

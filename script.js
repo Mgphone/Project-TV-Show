@@ -39,16 +39,18 @@ function selectShows(allShows) {
       console.error("Error fetching default episodes:", error);
     });
 
-  allShows.map((allShow) => {
-    const option = document.createElement("option");
-    option.value = allShow.id;
-    option.textContent = allShow.name;
-    if (allShow.id == "169") {
-      option.selected = true;
-    }
+  allShows
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((allShow) => {
+      const option = document.createElement("option");
+      option.value = allShow.id;
+      option.textContent = allShow.name;
+      if (allShow.id == "169") {
+        option.selected = true;
+      }
 
-    showSelect.appendChild(option);
-  });
+      showSelect.appendChild(option);
+    });
 
   showSelect.addEventListener("change", () => {
     const selectedOption = showSelect.options[showSelect.selectedIndex];
@@ -59,7 +61,6 @@ function selectShows(allShows) {
 
     fetchEpisodes(episodePath)
       .then((allEpisodes) => {
-        // console.log("Selected episodes:", allEpisodes);
         initializeSearchAndDropdown(allEpisodes);
       })
       .catch((error) => {

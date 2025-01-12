@@ -2,7 +2,7 @@ body {
   background-color: #999;
 }
 #root {
-  background-color: red;
+  /* background-color: red; */
   display: flex;
   flex-direction: row;
   /* justify-content: space-around; */
@@ -10,9 +10,9 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
+  padding: 20px 0;
 }
 main {
-
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
@@ -53,7 +53,6 @@ main {
 }
 .episode:hover {
   transform: scale(0.8);
-
 }
 .episode h2 {
   padding: 20px;

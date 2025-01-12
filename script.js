@@ -34,7 +34,7 @@ function selectShows(allShows) {
   fetchEpisodes(episodePath)
     .then((allEpisodes) => {
       // console.log("Default episodes:", allEpisodes);
-      makePageForEpisodes(allEpisodes);
+      makePageForShows(allEpisodes);
       // initializeSearchAndDropdown(allEpisodes);
     })
     .catch((error) => {
@@ -42,6 +42,11 @@ function selectShows(allShows) {
     });
   const selectedShows = allShows.sort((a, b) => a.name.localeCompare(b.name));
 
+  const defaultOption = document.createElement("option");
+  defaultOption.value = "";
+  defaultOption.textContent = "All Shows";
+
+  showSelect.appendChild(defaultOption);
   selectedShows.map((allShow) => {
     // console.log(allShow);
     const option = document.createElement("option");
@@ -70,6 +75,50 @@ function selectShows(allShows) {
   });
 
   selectedShow.append(showSelect);
+}
+//make page for shows
+function makePageForShows(showList) {
+  const mainContainer = document.querySelector("main");
+  mainContainer.innerHTML = "";
+
+  showList.map((show) => {
+    // console.log("this is " + JSON.stringify(show));
+
+    const showContainer = document.createElement("div");
+    showContainer.classList.add("show-container");
+
+    const name = document.createElement("h2");
+    name.textContent = show.name;
+    showContainer.appendChild(name);
+
+    const image = document.createElement("img");
+    image.src = show.image?.medium || "";
+
+    image.alt = `${show.name} image`;
+    showContainer.appendChild(image);
+
+    const summary = document.createElement("p");
+    summary.innerHTML = show.summary;
+    showContainer.appendChild(summary);
+
+    const genres = document.createElement("p");
+    genres.textContent = `Genres: ${show.genres.join(", ")}`;
+    showContainer.appendChild(genres);
+
+    const status = document.createElement("p");
+    status.textContent = `Status: ${show.status}`;
+    showContainer.appendChild(status);
+
+    const rating = document.createElement("p");
+    rating.textContent = `Rating: ${show.rating?.average || "N/A"}`;
+    showContainer.appendChild(rating);
+
+    const runtime = document.createElement("p");
+    runtime.textContent = `Runtime: ${show.runtime} minutes`;
+    showContainer.appendChild(runtime);
+
+    mainContainer.appendChild(showContainer);
+  });
 }
 
 function makePageForEpisodes(episodeList) {

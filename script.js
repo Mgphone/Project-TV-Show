@@ -28,25 +28,26 @@ function selectShows(allShows) {
   showSelect.id = "showList-selector";
 
   // Default episode path (if no show is selected)
-  let episodePath = "https://api.tvmaze.com/shows/169/episodes";
+  let episodePath = "https://api.tvmaze.com/shows";
   //first display the episodes
+
   fetchEpisodes(episodePath)
     .then((allEpisodes) => {
       // console.log("Default episodes:", allEpisodes);
-      initializeSearchAndDropdown(allEpisodes);
+      makePageForEpisodes(allEpisodes);
+      // initializeSearchAndDropdown(allEpisodes);
     })
     .catch((error) => {
       console.error("Error fetching default episodes:", error);
     });
   const selectedShows = allShows.sort((a, b) => a.name.localeCompare(b.name));
+
   selectedShows.map((allShow) => {
     // console.log(allShow);
     const option = document.createElement("option");
     option.value = allShow.id;
     option.textContent = allShow.name;
-    if (allShow.id === 169) {
-      option.selected = true;
-    }
+
     showSelect.appendChild(option);
   });
 
@@ -80,9 +81,11 @@ function makePageForEpisodes(episodeList) {
     episodeDiv.classList.add("episode");
 
     const title = document.createElement("h2");
-    const formattedSeason = String(episode.season).padStart(2, "0");
-    const formattedNumber = String(episode.number).padStart(2, "0");
-    title.textContent = `${episode.name} - S${formattedSeason}E${formattedNumber}`;
+    const formattedSeason = String(episode.season || "0").padStart(2, "0");
+    const formattedNumber = String(episode.number || "0").padStart(2, "0");
+    title.textContent = `${episode.name}${
+      episode.season ? `- S${formattedSeason}E${formattedNumber}` : ""
+    } `;
 
     const img = document.createElement("img");
     img.src = episode.image.medium;

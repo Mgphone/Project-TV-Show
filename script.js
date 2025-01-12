@@ -1,9 +1,69 @@
 // JavaScript code for Level 200 implementation
 
 function setup() {
-  const allEpisodes = getAllEpisodes();
-  initializeSearchAndDropdown(allEpisodes);
-  makePageForEpisodes(allEpisodes);
+  fetchEpisodes("https://api.tvmaze.com/shows")
+    .then((allShows) => {
+      if (allShows) {
+        // console.log(allShows);
+        selectShows(allShows);
+      }
+    })
+
+    .catch((error) => console.error(error));
+}
+function fetchEpisodes(url) {
+  return fetch(url)
+    .then((response) => {
+      if (response.ok) {
+        return response.json();
+      } else {
+        throw new Error("Fetching Problem");
+      }
+    })
+    .catch((error) => console.error(error));
+}
+function selectShows(allShows) {
+  const selectedShow = document.getElementById("select-show");
+  const showSelect = document.createElement("select");
+  showSelect.id = "showList-selector";
+
+  // Default episode path (if no show is selected)
+  let episodePath = "https://api.tvmaze.com/shows/1/episodes";
+  //first display the episodes
+  fetchEpisodes(episodePath)
+    .then((allEpisodes) => {
+      // console.log("Default episodes:", allEpisodes);
+      initializeSearchAndDropdown(allEpisodes);
+    })
+    .catch((error) => {
+      console.error("Error fetching default episodes:", error);
+    });
+
+  allShows.map((allShow) => {
+    const option = document.createElement("option");
+    option.value = allShow.id;
+    option.textContent = allShow.name;
+    showSelect.appendChild(option);
+  });
+
+  showSelect.addEventListener("change", () => {
+    const selectedOption = showSelect.options[showSelect.selectedIndex];
+    const showId = selectedOption.value;
+    const showName = selectedOption.textContent;
+
+    episodePath = `https://api.tvmaze.com/shows/${showId}/episodes`;
+
+    fetchEpisodes(episodePath)
+      .then((allEpisodes) => {
+        // console.log("Selected episodes:", allEpisodes);
+        initializeSearchAndDropdown(allEpisodes);
+      })
+      .catch((error) => {
+        console.error("Error fetching episodes for selected show:", error);
+      });
+  });
+
+  selectedShow.append(showSelect);
 }
 
 function makePageForEpisodes(episodeList) {
@@ -41,12 +101,21 @@ function makePageForEpisodes(episodeList) {
 
 function initializeSearchAndDropdown(allEpisodes) {
   const rootElem = document.getElementById("root");
-  
+  //default show all
+  makePageForEpisodes(allEpisodes);
+  const existingControls = document.getElementById("controls");
+  if (existingControls) {
+    existingControls.innerHTML = "";
+  }
   // Create search bar
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.placeholder = "Search episodes...";
   searchInput.id = "search-bar";
+
+  //make it episode label
+  const selectLabel = document.createElement("label");
+  selectLabel.setAttribute("for", "episode-label");
 
   // Create dropdown
   const episodeSelect = document.createElement("select");
@@ -81,22 +150,27 @@ function initializeSearchAndDropdown(allEpisodes) {
     const selectedValue = episodeSelect.value;
     if (selectedValue === "") {
       makePageForEpisodes(allEpisodes);
+      updateEpisodeCount(allEpisodes.length, allEpisodes.length);
     } else {
-      const selectedEpisode = allEpisodes.filter((episode) => episode.name === selectedValue);
+      const selectedEpisode = allEpisodes.filter(
+        (episode) => episode.name === selectedValue
+      );
       makePageForEpisodes(selectedEpisode);
+      updateEpisodeCount(selectedEpisode.length, allEpisodes.length);
     }
   });
 
   // Add elements to DOM
   const controlsDiv = document.createElement("div");
   controlsDiv.id = "controls";
-  controlsDiv.append(searchInput, episodeSelect);
+  // controlsDiv.appendChild(selectLabel);
+  controlsDiv.append(searchInput, selectLabel, episodeSelect);
   rootElem.prepend(controlsDiv);
 
   // Episode count display
   const episodeCount = document.createElement("p");
   episodeCount.id = "episode-count";
-  rootElem.append(episodeCount);
+  controlsDiv.append(episodeCount);
   updateEpisodeCount(allEpisodes.length, allEpisodes.length);
 }
 

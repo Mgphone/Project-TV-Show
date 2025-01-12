@@ -1,11 +1,12 @@
 // JavaScript code for Level 200 implementation
-
+let displayAllShows = [];
 function setup() {
   fetchEpisodes("https://api.tvmaze.com/shows")
     .then((allShows) => {
       if (allShows) {
         // console.log(allShows);
-        selectShows(allShows);
+        displayAllShows = allShows;
+        mainShowListControl(displayAllShows);
       }
     })
 
@@ -22,10 +23,19 @@ function fetchEpisodes(url) {
     })
     .catch((error) => console.error(error));
 }
-function selectShows(allShows) {
+function mainShowListControl(allShows) {
+  //select box
   const selectedShow = document.getElementById("select-show");
   const showSelect = document.createElement("select");
   showSelect.id = "showList-selector";
+  //search show list
+  // Create search bar
+  const searchInput = document.createElement("input");
+  searchInput.type = "text";
+  searchInput.placeholder = "Search Shows...";
+  searchInput.id = "search-bar";
+
+  selectedShow.append(searchInput);
 
   // Default episode path (if no show is selected)
   let episodePath = "https://api.tvmaze.com/shows";
@@ -68,6 +78,7 @@ function selectShows(allShows) {
       .then((allEpisodes) => {
         // console.log("Selected episodes:", allEpisodes);
         initializeSearchAndDropdown(allEpisodes);
+        selectedShow.style.display = "none";
       })
       .catch((error) => {
         console.error("Error fetching episodes for selected show:", error);
@@ -190,6 +201,12 @@ function initializeSearchAndDropdown(allEpisodes) {
     option.textContent = `S${formattedSeason}E${formattedNumber} - ${episode.name}`;
     episodeSelect.appendChild(option);
   });
+  //create button
+  const button = document.createElement("button");
+  button.textContent = "Display Show List";
+  button.addEventListener("click", () => {
+    alert("You click me!");
+  });
 
   // Event listeners
   searchInput.addEventListener("input", () => {
@@ -216,12 +233,12 @@ function initializeSearchAndDropdown(allEpisodes) {
       updateEpisodeCount(selectedEpisode.length, allEpisodes.length);
     }
   });
-
+  //add button controls
   // Add elements to DOM
   const controlsDiv = document.createElement("div");
   controlsDiv.id = "controls";
   // controlsDiv.appendChild(selectLabel);
-  controlsDiv.append(searchInput, selectLabel, episodeSelect);
+  controlsDiv.append(searchInput, selectLabel, episodeSelect, button);
   rootElem.prepend(controlsDiv);
 
   // Episode count display

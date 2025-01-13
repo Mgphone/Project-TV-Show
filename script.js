@@ -27,6 +27,7 @@ function mainShowListControl(allShows) {
   makePageForShows(allShows);
 
   const selectedShow = document.getElementById("select-show");
+  selectedShow.innerHTML = "";
   const showSelect = document.createElement("select");
   showSelect.id = "showList-selector";
 
@@ -218,8 +219,8 @@ function initializeSearchAndDropdown(allEpisodes) {
     if (existingControls) {
       existingControls.remove();
     }
+    mainShowListControl(displayAllShows);
     const selectedShow = document.getElementById("select-show");
-    // selectedShow.style.display = "block";
     selectedShow.style.removeProperty("display");
   });
 
@@ -252,7 +253,6 @@ function initializeSearchAndDropdown(allEpisodes) {
   // Add elements to DOM
   const controlsDiv = document.createElement("div");
   controlsDiv.id = "controls";
-  // controlsDiv.appendChild(selectLabel);
   controlsDiv.append(searchInput, selectLabel, episodeSelect, button);
   rootElem.prepend(controlsDiv);
 

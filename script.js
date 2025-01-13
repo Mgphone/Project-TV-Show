@@ -7,6 +7,7 @@ function setup() {
         // console.log(allShows);
         displayAllShows = allShows;
         mainShowListControl(displayAllShows);
+
       }
     })
 
@@ -140,6 +141,7 @@ function makePageForShows(showList) {
 
     mainContainer.appendChild(showContainer);
   });
+
 }
 
 function makePageForEpisodes(episodeList) {
@@ -185,6 +187,7 @@ function initializeSearchAndDropdown(allEpisodes) {
   if (existingControls) {
     existingControls.remove();
   }
+
   // Create search bar
   const searchInput = document.createElement("input");
   searchInput.type = "text";

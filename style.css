@@ -4,6 +4,7 @@ body {
 #root {
   display: flex;
   flex-direction: row;
+
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
@@ -21,6 +22,7 @@ body {
   width: 15vw;
 } */
 /* select show end */
+
 main {
   display: flex;
   flex-wrap: wrap;
@@ -35,6 +37,7 @@ main {
   gap: 20px;
   max-width: 80vw;
   justify-content: space-between;
+
 }
 #controls button:hover {
   background-color: black;
@@ -47,6 +50,7 @@ main {
 
 .episode,
 .show-container {
+
   background-color: #fff;
   width: calc(33.33% - 10px);
   border-radius: 5px;
@@ -54,6 +58,7 @@ main {
 }
 .episode:hover,
 .show-container:hover {
+
   transform: scale(0.8);
 }
 .episode h2,

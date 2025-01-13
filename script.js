@@ -24,69 +24,80 @@ function fetchEpisodes(url) {
     .catch((error) => console.error(error));
 }
 function mainShowListControl(allShows) {
-  //select box
+  makePageForShows(allShows);
+
   const selectedShow = document.getElementById("select-show");
   const showSelect = document.createElement("select");
   showSelect.id = "showList-selector";
-  //search show list
-  // Create search bar
+
   const searchInput = document.createElement("input");
   searchInput.type = "text";
   searchInput.placeholder = "Search Shows...";
   searchInput.id = "search-bar";
 
-  selectedShow.append(searchInput);
+  selectedShow.append(searchInput, showSelect);
 
-  // Default episode path (if no show is selected)
-  let episodePath = "https://api.tvmaze.com/shows";
-  //first display the episodes
+  function populateDropdown(showList) {
+    showSelect.innerHTML = "";
+    const existingPTag = document.querySelector("#show-count");
+    if (existingPTag) {
+      existingPTag.remove();
+    }
 
-  fetchEpisodes(episodePath)
-    .then((allEpisodes) => {
-      // console.log("Default episodes:", allEpisodes);
-      makePageForShows(allEpisodes);
-      // initializeSearchAndDropdown(allEpisodes);
-    })
-    .catch((error) => {
-      console.error("Error fetching default episodes:", error);
-    });
-  const selectedShows = allShows.sort((a, b) => a.name.localeCompare(b.name));
+    const makePtag = document.createElement("p");
+    makePtag.id = "show-count";
+    makePtag.textContent = `Number of shows: ${showList.length}`;
+    selectedShow.appendChild(makePtag);
 
-  const defaultOption = document.createElement("option");
-  defaultOption.value = "";
-  defaultOption.textContent = "All Shows";
+    showList
+      .sort((a, b) => a.name.localeCompare(b.name))
+      .forEach((show) => {
+        const option = document.createElement("option");
+        option.value = show.id;
+        option.textContent = show.name;
+        showSelect.appendChild(option);
+      });
+  }
 
-  showSelect.appendChild(defaultOption);
-  selectedShows.map((allShow) => {
-    // console.log(allShow);
-    const option = document.createElement("option");
-    option.value = allShow.id;
-    option.textContent = allShow.name;
+  populateDropdown(allShows);
 
-    showSelect.appendChild(option);
+  searchInput.addEventListener("input", () => {
+    const searchValue = searchInput.value.toLowerCase();
+    const filteredShows = allShows.filter(
+      (show) =>
+        show.name.toLowerCase().includes(searchValue) ||
+        show.genres.some((genre) =>
+          genre.toLowerCase().includes(searchValue)
+        ) ||
+        show.summary.toLowerCase().includes(searchValue)
+    );
+
+    populateDropdown(filteredShows);
+    makePageForShows(filteredShows);
   });
 
   showSelect.addEventListener("change", () => {
     const selectedOption = showSelect.options[showSelect.selectedIndex];
     // console.log(selectedOption);
     const showId = selectedOption.value;
-    // const showName = selectedOption.textContent;
+    // console.log("this is showid" + showId);
+    if (!showId) {
+      makePageForEpisodes(allShows);
+    } else {
+      const episodePath = `https://api.tvmaze.com/shows/${showId}/episodes`;
 
-    episodePath = `https://api.tvmaze.com/shows/${showId}/episodes`;
-
-    fetchEpisodes(episodePath)
-      .then((allEpisodes) => {
-        // console.log("Selected episodes:", allEpisodes);
-        initializeSearchAndDropdown(allEpisodes);
-        selectedShow.style.display = "none";
-      })
-      .catch((error) => {
-        console.error("Error fetching episodes for selected show:", error);
-      });
+      fetchEpisodes(episodePath)
+        .then((allEpisodes) => {
+          initializeSearchAndDropdown(allEpisodes);
+          selectedShow.style.display = "none";
+        })
+        .catch((error) => {
+          console.error("Error fetching episodes for selected show:", error);
+        });
+    }
   });
-
-  selectedShow.append(showSelect);
 }
+
 //make page for shows
 function makePageForShows(showList) {
   const mainContainer = document.querySelector("main");

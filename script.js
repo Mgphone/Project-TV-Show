@@ -104,8 +104,6 @@ function makePageForShows(showList) {
   mainContainer.innerHTML = "";
 
   showList.map((show) => {
-    // console.log("this is " + JSON.stringify(show));
-
     const showContainer = document.createElement("div");
     showContainer.classList.add("show-container");
 
@@ -159,7 +157,7 @@ function makePageForEpisodes(episodeList) {
     } `;
 
     const img = document.createElement("img");
-    img.src = episode.image.medium;
+    img.src = episode.image?.medium;
     img.alt = `${episode.name} - S${formattedSeason}E${formattedNumber}`;
 
     const refButton = document.createElement("button");
@@ -216,7 +214,13 @@ function initializeSearchAndDropdown(allEpisodes) {
   const button = document.createElement("button");
   button.textContent = "Display Show List";
   button.addEventListener("click", () => {
-    alert("You click me!");
+    const existingControls = document.getElementById("controls");
+    if (existingControls) {
+      existingControls.remove();
+    }
+    const selectedShow = document.getElementById("select-show");
+    // selectedShow.style.display = "block";
+    selectedShow.style.removeProperty("display");
   });
 
   // Event listeners

@@ -4,13 +4,13 @@ body {
 #root {
   display: flex;
   flex-direction: row;
-  /* justify-content: space-around; */
   justify-content: center;
   align-items: center;
   flex-wrap: wrap;
   gap: 20px;
 }
 /* select-show start  */
+
 #select-show {
   display: flex;
   justify-content: center;
@@ -31,7 +31,7 @@ main {
 }
 #controls {
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   gap: 10px;
 }
 /* show */

@@ -7,7 +7,6 @@ function setup() {
         // console.log(allShows);
         displayAllShows = allShows;
         mainShowListControl(displayAllShows);
-
       }
     })
 
@@ -105,43 +104,44 @@ function makePageForShows(showList) {
   const mainContainer = document.querySelector("main");
   mainContainer.innerHTML = "";
 
-  showList.map((show) => {
-    const showContainer = document.createElement("div");
-    showContainer.classList.add("show-container");
+  showList
+    .sort((a, b) => a.name.localeCompare(b.name))
+    .map((show) => {
+      const showContainer = document.createElement("div");
+      showContainer.classList.add("show-container");
 
-    const name = document.createElement("h2");
-    name.textContent = show.name;
-    showContainer.appendChild(name);
+      const name = document.createElement("h2");
+      name.textContent = show.name;
+      showContainer.appendChild(name);
 
-    const image = document.createElement("img");
-    image.src = show.image?.medium || "";
+      const image = document.createElement("img");
+      image.src = show.image?.medium || "";
 
-    image.alt = `${show.name} image`;
-    showContainer.appendChild(image);
+      image.alt = `${show.name} image`;
+      showContainer.appendChild(image);
 
-    const summary = document.createElement("p");
-    summary.innerHTML = show.summary;
-    showContainer.appendChild(summary);
+      const summary = document.createElement("p");
+      summary.innerHTML = show.summary;
+      showContainer.appendChild(summary);
 
-    const genres = document.createElement("p");
-    genres.textContent = `Genres: ${show.genres.join(", ")}`;
-    showContainer.appendChild(genres);
+      const genres = document.createElement("p");
+      genres.textContent = `Genres: ${show.genres.join(", ")}`;
+      showContainer.appendChild(genres);
 
-    const status = document.createElement("p");
-    status.textContent = `Status: ${show.status}`;
-    showContainer.appendChild(status);
+      const status = document.createElement("p");
+      status.textContent = `Status: ${show.status}`;
+      showContainer.appendChild(status);
 
-    const rating = document.createElement("p");
-    rating.textContent = `Rating: ${show.rating?.average || "N/A"}`;
-    showContainer.appendChild(rating);
+      const rating = document.createElement("p");
+      rating.textContent = `Rating: ${show.rating?.average || "N/A"}`;
+      showContainer.appendChild(rating);
 
-    const runtime = document.createElement("p");
-    runtime.textContent = `Runtime: ${show.runtime} minutes`;
-    showContainer.appendChild(runtime);
+      const runtime = document.createElement("p");
+      runtime.textContent = `Runtime: ${show.runtime} minutes`;
+      showContainer.appendChild(runtime);
 
-    mainContainer.appendChild(showContainer);
-  });
-
+      mainContainer.appendChild(showContainer);
+    });
 }
 
 function makePageForEpisodes(episodeList) {
